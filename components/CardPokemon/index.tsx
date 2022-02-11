@@ -1,4 +1,5 @@
-import { createContext, useMemo } from "react";
+import { ReactElement } from "react";
+import { createContext } from "react";
 import { Pokemon } from "../../interfaces/pokemon";
 
 export { CardPokeImage } from "./CardPokeImage";
@@ -7,17 +8,17 @@ export { CardPokeStats } from "./CardPokeStats";
 export { CardPokeTypes } from "./CardPokeTypes";
 
 
-type CardPokemon = {
+type CardPokemonProps = {
   pokemon: Pokemon;
   mainType: string;
 }
 
 type Props = {
   pokemon: Pokemon;
-  children: JSX.Element | JSX.Element[];
+  children: ReactElement | ReactElement[];
 };
 
-export const CardPokemonContext = createContext({} as CardPokemon);
+export const CardPokemonContext = createContext({} as CardPokemonProps);
 const { Provider } = CardPokemonContext;
 
 export const CardPokemon = ({ pokemon, children }: Props) => {

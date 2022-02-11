@@ -5,6 +5,7 @@ const NotFound = () => (
       <img
         className="w-60 pb-8"
         src="/404.png"
+        alt="Pagina 404"
       />
       <h2 className="text-white font-audio text-3xl">Página no encontrada</h2>
       

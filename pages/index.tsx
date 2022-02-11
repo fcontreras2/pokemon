@@ -16,7 +16,7 @@ export default function Home() {
   
   const [pokemons, setPokemons] = useState<Pokemon[]>();
 
-  const { loading, error, data, fetchMore, networkStatus } = useQuery<Response<Pokemon[]>>(
+  const { loading, data } = useQuery<Response<Pokemon[]>>(
     ALL_POKEMONS_QUERY,
     {
       variables: allPostsQueryVars,
@@ -31,7 +31,7 @@ export default function Home() {
     if (!loading) {
         setPokemons(data?.data.slice(0, 60))
     }
-  },[data]);
+  },[loading, data]);
 
   return (
     <div className="p-0 background m-0 relative min-h-screen bg-blue-dark-400 pb-20">
