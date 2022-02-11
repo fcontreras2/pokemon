@@ -1,0 +1,96 @@
+@import "./variables";
+
+.card {
+  overflow: hidden;
+  &-id-pokemon {
+    position: absolute;
+    font-size: 3.5rem;
+    top: 44px;
+    left: 16px;
+    color: white;
+  }
+
+  &:hover {
+    --tw-gradient-from: #6B7280;
+    --tw-gradient-to: #000000;
+    
+    .card-bg-pokemon {
+      transform: rotate(-720deg);
+      transition: 0.5s ease-out;
+
+    }
+
+    .card-pokeballs {
+      background-color: rgb(12 18 21 / var(--tw-bg-opacity));
+      --tw-bg-opacity: 0.4;
+    }
+
+    @each $type, $color in $pokemon-types-colors {
+      &.card-bg-pokemon-#{$type} {
+        --tw-gradient-from: #{$color};
+      }
+    }
+  }
+
+  &-bg-pokemon {
+    position: absolute;
+    z-index: 1;
+    left: 0px;
+    right: -275px;
+    top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    display: block;
+    width: 150px;
+    height: 150px;
+    border: 2px solid black;
+    border-radius: 100%;
+    opacity: 0.4;
+
+    background: linear-gradient(180deg, rgba(227, 53, 13, 1) 49%, white 50%);
+
+    &::after {
+      position: absolute;
+      z-index: 1;
+      content: "";
+      display: block;
+      width: 150px;
+      height: 2px;
+      margin-top: 72px;
+      background-color: black;
+    }
+
+    &::before {
+      position: absolute;
+      z-index: 2;
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      margin-top: 64px;
+      margin-left: 55px;
+      border: 3px solid black;
+      border-radius: 100px;
+      background-color: white;
+    }
+  }
+
+  &-pokeballs {
+    z-index: 30;
+    &:hover {
+      flex-direction: column;
+      span {
+        display: block;
+      }
+    }
+  }
+}
+
+  @each $type, $color in $pokemon-types-colors {
+    .pokeball-type-#{$type} > g {
+      fill: #{$color};
+    }
+   
+  }

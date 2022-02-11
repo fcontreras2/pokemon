@@ -1,0 +1,43 @@
+.loading {
+    
+    &::before {
+        content: '';
+        top: 0;
+        left: 0;
+        position: absolute;
+        display: block;
+        height: 100%;
+        width: 100%;
+        background-color: black;
+        opacity: 0.8;
+        z-index: 10;
+    }
+
+    @keyframes rotate-loading {
+        25% {
+            width: 150px;
+            height: 150px;
+            transform: rotate(180deg);
+        }
+        50% {
+            transform: rotate(360deg);
+            width: 100px;
+            height: 100px;
+        }
+
+        100% {
+            transform: rotate(720deg);
+        }
+    }
+    
+    >  svg {
+        width: 100px;
+        height: 100px;
+        z-index: 20;
+        animation: rotate-loading  1.5s infinite;
+    }
+   
+
+    
+
+}
