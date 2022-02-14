@@ -6,6 +6,7 @@ import { Response } from "../interfaces/response";
 import { CardPokemon, CardPokeImage, CardPokeName, CardPokeStats, CardPokeTypes } from "../components/CardPokemon";
 import { Loading } from "components/Loading";
 import { useEffect, useState } from "react";
+import Head from "next/head";
 
 export const allPostsQueryVars = {
   skip: 0,
@@ -29,11 +30,17 @@ export default function Home() {
 
   useEffect(() => {
     if (!loading) {
-        setPokemons(data?.data.slice(0, 60))
+        setPokemons(data?.data)
     }
   },[loading, data]);
 
   return (
+    <>
+    <Head>
+      <title>Pokemon - Pokedex</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <meta name="description" content="Pokemon, list all pokemon. This is a Frontend development with Nextjs + Typescript + Tailwind" />
+    </Head>
     <div className="p-0 background m-0 relative min-h-screen bg-blue-dark-400 pb-20">
       <NavBar />
 
@@ -54,5 +61,7 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </>
+
   );
 }

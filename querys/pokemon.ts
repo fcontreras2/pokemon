@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const ALL_POKEMONS_QUERY = gql`
     query getListPokemon  {
-        data:pokemon_v2_pokemon(limit: 649 ) {
+        data:pokemon_v2_pokemon(where: {id: {_lt: 1000}}) {
             id
             name
             stats: pokemon_v2_pokemonstats {
