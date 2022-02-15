@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Pagination } from "interfaces/pagination";
 
 type Props<T> = {
   data: T[];
@@ -7,11 +8,7 @@ type Props<T> = {
   loading: boolean;
 };
 
-type Response<T> = {
-  data: T;
-};
-
-const INITIAL_PROPS: Props<any> = {
+const INITIAL_PROPS = {
   data: [],
   page: 0,
   perPage: 60,
@@ -23,27 +20,14 @@ const usePagination = <T extends object>({
   page,
   perPage,
   loading,
-}: Props<T> = INITIAL_PROPS) => {
-  const [data, setData] = useState<T[]>();
-  const [pages, setPages] = useState<(number | string)[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(page);
+}: Props<T> = INITIAL_PROPS): Pagination<T> => {
 
-  const totalPages = useMemo(() => {
-    return allData ? Math.ceil((allData as T[]).length / perPage) : 0;
-  }, [allData]);
+  const [data, setData] = useState<T[]>();
+  const [currentPage, setCurrentPage] = useState<number>(page);
 
   const handlePagination = (nextPage: number) => {
     setCurrentPage(nextPage);
   };
-
-  useEffect(() => {
-    const nextPages: (number | string)[] = [];
-    for (let index = 0; index < totalPages; index++) {
-      nextPages[index] = index + 1;
-    }
-
-    setPages(nextPages);
-  }, [totalPages]);
 
   const changePagination = useCallback(() => {
     setData(allData.slice(currentPage * perPage, (currentPage + 1) * perPage));
@@ -66,10 +50,10 @@ const usePagination = <T extends object>({
 
   return {
     data,
-    pages,
     handlePagination,
     currentPage,
-  };
+    totalItems: allData?.length || 0
+  } as Pagination<T>;
 };
 
 export default usePagination;

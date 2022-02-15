@@ -16,6 +16,7 @@ import Head from "next/head";
 import usePagination from "hooks/usePagination";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import Pagination from "components/Pagination";
 
 export default function Home() {
   const router = useRouter();
@@ -32,8 +33,8 @@ export default function Home() {
 
   const {
     data: pokemons,
-    pages,
     handlePagination,
+    totalItems,
     currentPage,
   } = usePagination<Pokemon>({
     data: data ? data.data : [],
@@ -76,28 +77,12 @@ export default function Home() {
                   </CardPokemon>
                 ))}
               </div>
-
-              <div className="flex justify-center my-8  py-4 bg-blue-dark bg-opacity-50 rounded-lg">
-                <div className=" flex justify-center space-x-4 items-center">
-                  {
-                    pages.map((e) => (
-                      <button
-                        key={"button-pag-" + e}
-                        onClick={() => {
-                          handlePagination((e as number) - 1);
-                        }}
-                        className={`font-audio hover:bg-blue-dark-500 ${
-                          currentPage === (e as number) - 1
-                            ? "bg-blue-dark-500"
-                            : "bg-blue-dark-300"
-                        } hover:border-dark-200  border-2 border-blue-dark-300  text-white w-10 h-10 p-2 flex justify-center items-center rounded-md `}
-                      >
-                        {e}
-                      </button>
-                    ))
-                  }
-                </div>
-              </div>
+              <Pagination
+                currentPage={currentPage}
+                handlePagination={handlePagination}
+                totalItems={totalItems}
+                perPage={60}
+              />
             </>
           )}
         </div>
