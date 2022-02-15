@@ -79,9 +79,10 @@ export default function Home() {
 
               <div className="flex justify-center my-8  py-4 bg-blue-dark bg-opacity-50 rounded-lg">
                 <div className=" flex justify-center space-x-4 items-center">
-                  {React.Children.toArray(
+                  {
                     pages.map((e) => (
                       <button
+                        key={"button-pag-" + e}
                         onClick={() => {
                           handlePagination((e as number) - 1);
                         }}
@@ -94,7 +95,7 @@ export default function Home() {
                         {e}
                       </button>
                     ))
-                  )}
+                  }
                 </div>
               </div>
             </>
