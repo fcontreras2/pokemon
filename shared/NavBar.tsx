@@ -13,6 +13,7 @@ const NavBar = () => {
               width={"91px"}
               height={"64px"}
               layout="fixed"
+              priority
             />
           </div>
         </div>
