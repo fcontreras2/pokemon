@@ -1,7 +1,7 @@
-import { Pagination } from "interfaces/pagination";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { Pagination as PaginationI } from "interfaces/pagination";
+import { useEffect, useMemo, useState } from "react";
 
-interface Props extends Omit<Pagination<null>, "data"> {
+interface Props extends Omit<PaginationI<null>, "data"> {
   perPage: number;
 }
 
