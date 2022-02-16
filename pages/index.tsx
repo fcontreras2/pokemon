@@ -1,9 +1,13 @@
 import React from "react";
-import NavBar from "../shared/NavBar";
+import { GetServerSideProps } from "next";
+import Head from "next/head";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
-import { ALL_POKEMONS_QUERY } from "../querys/pokemon";
 import { Pokemon } from "../interfaces/pokemon";
 import { Response } from "../interfaces/response";
+import { ALL_POKEMONS_QUERY } from "../querys/pokemon";
+import NavBar from "../shared/NavBar";
 import {
   CardPokemon,
   CardPokeImage,
@@ -11,19 +15,39 @@ import {
   CardPokeStats,
   CardPokeTypes,
 } from "../components/CardPokemon";
-import { Loading } from "components/Loading";
-import Head from "next/head";
-import usePagination from "hooks/usePagination";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
 import Pagination from "components/Pagination";
+import { Loading } from "components/Loading";
+import usePagination from "hooks/usePagination";
+import { initializeApollo } from "lib/apolloClient";
 
-export default function Home() {
+export const getServerSideProps: GetServerSideProps = async () => {
+
+  const client = initializeApollo();
+
+  const query: Response<Pokemon[]> = await client.query({
+    query: ALL_POKEMONS_QUERY,
+  })
+
+  return {
+    props: {
+      data: query.data,
+    }
+  }
+}
+
+type Props = {
+  data: Response<Pokemon[]>,
+}
+
+export default function Home({ data:dataSRR }: Props) {
+  
   const router = useRouter();
-  const { loading, data, error } = useQuery<Response<Pokemon[]>>(
+  // const [data, setData] = useState<Response<Pokemon[]>>(dataSRR);
+  const { loading, error } = useQuery<Response<Pokemon[]>>(
     ALL_POKEMONS_QUERY,
     {
-      variables: {},
+      skip: true,
+      variables: router.query,
       // Setting this value to true will make the component rerender when
       // the "networkStatus" changes, so we are able to know if it is fetching
       // more data
@@ -31,14 +55,18 @@ export default function Home() {
     }
   );
 
+  // useEffect(() => {
+  //   setData(data);
+  // }, [dataClient])
+
   const {
     data: pokemons,
     handlePagination,
     totalItems,
     currentPage,
   } = usePagination<Pokemon>({
-    data: data ? data.data : [],
-    page: 0,
+    data: dataSRR.data ? dataSRR.data : [],
+    page: Number(router.query.page),
     perPage: 60,
     loading,
   });

@@ -41,7 +41,7 @@ const Pagination = ({
         <button
           disabled={currentPage === 0}
           onClick={() => {
-            handlePagination(currentPage - 1);
+            handlePagination(0);
           }}
           className="font-audio bg-blue-dark-300 hover:bg-blue-dark-500 hover:border-dark-200  border-2 border-blue-dark-300  text-white w-8 h-8 tablet:w-10 tablet:h-10 p-2 flex justify-center items-center rounded-md  disabled:hover:cursor-not-allowed disabled:bg-blue-dark-50 disabled:text-blue-dark-200"
         >{`<<`}</button>

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Pagination } from "interfaces/pagination";
+import { useRouter } from "next/router";
 
 type Props<T> = {
   data: T[];
@@ -8,24 +9,20 @@ type Props<T> = {
   loading: boolean;
 };
 
-const INITIAL_PROPS = {
-  data: [],
-  page: 0,
-  perPage: 60,
-  loading: true,
-};
-
 const usePagination = <T extends object>({
   data: allData,
   page,
   perPage,
-  loading,
-}: Props<T> = INITIAL_PROPS): Pagination<T> => {
+}: Props<T>): Pagination<T> => {
 
-  const [data, setData] = useState<T[]>();
-  const [currentPage, setCurrentPage] = useState<number>(page);
+  const router = useRouter()
+  const [data, setData] = useState<T[]>();  
+  const [currentPage, setCurrentPage] = useState<number>(0);
 
   const handlePagination = (nextPage: number) => {
+    router.push(router.basePath, {
+      query: {...router.query, page: nextPage}
+    }, { shallow: true})
     setCurrentPage(nextPage);
   };
 
@@ -43,10 +40,8 @@ const usePagination = <T extends object>({
   }, [currentPage]);
 
   useEffect(() => {
-    if (!loading) {
-      changePagination();
-    }
-  }, [loading]);
+    if (page) setCurrentPage(page);
+  },[page])
 
   return {
     data,
