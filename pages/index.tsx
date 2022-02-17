@@ -19,41 +19,37 @@ import Pagination from "components/Pagination";
 import { Loading } from "components/Loading";
 import usePagination from "hooks/usePagination";
 import { initializeApollo } from "lib/apolloClient";
+import Filters from "components/Filters";
 
 export const getServerSideProps: GetServerSideProps = async () => {
-
   const client = initializeApollo();
 
   const query: Response<Pokemon[]> = await client.query({
     query: ALL_POKEMONS_QUERY,
-  })
+  });
 
   return {
     props: {
       data: query.data,
-    }
-  }
-}
+    },
+  };
+};
 
 type Props = {
-  data: Response<Pokemon[]>,
-}
+  data: Response<Pokemon[]>;
+};
 
-export default function Home({ data:dataSRR }: Props) {
-  
+export default function Home({ data: dataSRR }: Props) {
   const router = useRouter();
   // const [data, setData] = useState<Response<Pokemon[]>>(dataSRR);
-  const { loading, error } = useQuery<Response<Pokemon[]>>(
-    ALL_POKEMONS_QUERY,
-    {
-      skip: true,
-      variables: router.query,
-      // Setting this value to true will make the component rerender when
-      // the "networkStatus" changes, so we are able to know if it is fetching
-      // more data
-      notifyOnNetworkStatusChange: true,
-    }
-  );
+  const { loading, error } = useQuery<Response<Pokemon[]>>(ALL_POKEMONS_QUERY, {
+    skip: true,
+    variables: router.query,
+    // Setting this value to true will make the component rerender when
+    // the "networkStatus" changes, so we are able to know if it is fetching
+    // more data
+    notifyOnNetworkStatusChange: true,
+  });
 
   // useEffect(() => {
   //   setData(data);
@@ -87,10 +83,10 @@ export default function Home({ data:dataSRR }: Props) {
           content="Pokemon, list all pokemon. This is a Frontend development with Nextjs + Typescript + Tailwind"
         />
       </Head>
-      <div className="p-0 background m-0 relative min-h-screen bg-blue-dark-400 pb-20">
+      <div className="p-0 background m-0 relative min-h-screen bg-blue-dark-400 pt-[64px]">
         <NavBar />
-
-        <div className=" container mx-auto pt-24">
+        <Filters totalItems={totalItems} />
+        <div className=" container mx-auto bg-blue-dark-200 bg-opacity-70 py-10 px-2 tablet:px-8">
           {!pokemons || loading ? (
             <Loading />
           ) : (

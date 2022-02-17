@@ -36,8 +36,8 @@ const Pagination = ({
   }, [currentPage, totalPages]);
 
   return (
-    <div className="flex justify-center my-8 mx-4  py-4 bg-blue-dark bg-opacity-50 rounded-lg">
-      <div className="flex justify-center flex-wrap px-2 space-x-2 tablet:space-y-0  tablet:space-x-3 desktop:space-x-4 items-center">
+    <div className="flex justify-center my-8 mx-4 tablet:mx-0  py-4 bg-blue-dark bg-opacity-50 rounded-lg">
+      <div className="flex justify-center gap-y-2 flex-wrap px-2  space-x-2 tablet:space-y-0  tablet:space-x-3 desktop:space-x-4 items-center">
         <button
           disabled={currentPage === 0}
           onClick={() => {
