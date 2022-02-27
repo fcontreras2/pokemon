@@ -5,8 +5,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "./card-pokemon.scss"; 
-@import "./loading.scss"; 
+@import "./card-pokemon"; 
+@import "./loading"; 
+@import "./modal"; 
 
 html,
 body {

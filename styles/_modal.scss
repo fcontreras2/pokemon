@@ -1,0 +1,21 @@
+.modal {
+  &__background {
+    z-index: 100;
+    @apply bg-blue-dark-600 bg-opacity-25;
+
+    .modal__container {
+      @apply opacity-0 mb-96;
+      transition: 0.4s linear all;
+    }
+
+    transition: 0.4s linear all;
+    &.--open {
+      @apply bg-opacity-60;
+
+      .modal__container {
+        @apply opacity-100 mb-0;
+        transition: 0.2s linear all;
+      }
+    }
+  }
+}

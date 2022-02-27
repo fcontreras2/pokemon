@@ -1,8 +1,18 @@
+import { useContext } from 'react';
+import { ModalContext } from 'components/Modal/context/ModalContext';
 import PokeBall from 'icons/pokeball.svg';
+import ModalFilters from 'components/Modal/ModalFilters';
 
 const Filters = ({ totalItems }: { totalItems: number }) => {
-  return (
-    <div className=" border-b-0 border-b-blue-dark-200">
+
+  const { open } = useContext(ModalContext);
+
+  const handleOpen = () => {
+    open({...ModalFilters()})
+  }
+
+  return (  
+    <div className=" border-b-0 border-b-blue-dark-200 cursor-pointer">
       <div className="container relative overflow-hidden mx-auto bg-gradient-to-tl from-blue-dark-300 to-blue-dark-600">
         <img
           className="absolute w-72 h-auto -bottom-20 right-10 opacity-20"
@@ -24,7 +34,7 @@ const Filters = ({ totalItems }: { totalItems: number }) => {
             <h3 className="text-white text-5xl font-audio">{totalItems}</h3>
           </div>
 
-          <span className="text-xs absolute bottom-0 left-6 bg-blue-dark-400  px-4 pb-2 rounded-t-lg text-white font-semibold flex items-center space-x-2 pt-2">
+          <span onClick={handleOpen} className="text-xs absolute bottom-0 left-6 bg-blue-dark-400  px-4 pb-2 rounded-t-lg text-white font-semibold flex items-center space-x-2 pt-2">
               <PokeBall width={"14"} height={"14"} fill="red" />
               <span>Filtros avanzados</span>
             </span>
