@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import { GetServerSideProps } from "next";
+import React from 'react';
 import Head from "next/head";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -18,42 +17,18 @@ import {
 import Pagination from "components/Pagination";
 import { Loading } from "components/Loading";
 import usePagination from "hooks/usePagination";
-import { initializeApollo } from "lib/apolloClient";
 import Filters from "components/Filters";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const client = initializeApollo();
-
-  const query: Response<Pokemon[]> = await client.query({
-    query: ALL_POKEMONS_QUERY,
-  });
-
-  return {
-    props: {
-      data: query.data,
-    },
-  };
-};
-
-type Props = {
-  data: Response<Pokemon[]>;
-};
-
-export default function Home({ data: dataSRR }: Props) {
+export default function Home() {
   const router = useRouter();
-  // const [data, setData] = useState<Response<Pokemon[]>>(dataSRR);
-  const { loading, error } = useQuery<Response<Pokemon[]>>(ALL_POKEMONS_QUERY, {
-    skip: true,
-    variables: router.query,
-    // Setting this value to true will make the component rerender when
-    // the "networkStatus" changes, so we are able to know if it is fetching
-    // more data
-    notifyOnNetworkStatusChange: true,
-  });
 
-  // useEffect(() => {
-  //   setData(data);
-  // }, [dataClient])
+  const { loading, error, data, refetch } = useQuery<Response<Pokemon[]>>(
+    ALL_POKEMONS_QUERY,
+    {
+      notifyOnNetworkStatusChange: true,
+      variables: router.query,
+    }
+  );
 
   const {
     data: pokemons,
@@ -61,7 +36,7 @@ export default function Home({ data: dataSRR }: Props) {
     totalItems,
     currentPage,
   } = usePagination<Pokemon>({
-    data: dataSRR.data ? dataSRR.data : [],
+    data: data ? data.data : [],
     page: Number(router.query.page),
     perPage: 60,
     loading,
@@ -72,6 +47,14 @@ export default function Home({ data: dataSRR }: Props) {
       router.push("/500");
     }
   }, [error]);
+
+  useEffect(() => {
+    refetch(router.query);
+  }, [router.query]);
+
+  useEffect(() => {
+    refetch(router.query);
+  }, []);
 
   return (
     <>
@@ -86,12 +69,12 @@ export default function Home({ data: dataSRR }: Props) {
       <div className="p-0 background m-0 relative min-h-screen bg-blue-dark-400 pt-[64px]">
         <NavBar />
         <Filters totalItems={totalItems} />
-        <div className=" container mx-auto bg-blue-dark-200 bg-opacity-70 py-10 px-2 tablet:px-8">
+        <div className=" container mx-auto  bg-blue-dark-200 bg-opacity-70 py-10 px-2 tablet:px-8">
           {!pokemons || loading ? (
             <Loading />
           ) : (
             <>
-              <div className=" grid grid-cols-4 tablet:grid-cols-12 desktop:grid-cols-24 gap-4 flex-wrap px-4 tablet:px-0">
+              <div className=" grid grid-cols-4 hover:shadow-xl tablet:grid-cols-12 desktop:grid-cols-24 gap-4 flex-wrap px-4 tablet:px-0">
                 {pokemons?.map((pokemon) => (
                   <CardPokemon key={"pokemon-" + pokemon.id} pokemon={pokemon}>
                     <CardPokeTypes />

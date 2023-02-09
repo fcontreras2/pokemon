@@ -37,7 +37,7 @@ const usePagination = <T extends object>({
       behavior: "smooth",
     });
     
-  }, [currentPage]);
+  }, [currentPage, allData]);
 
   useEffect(() => {
     if (page) setCurrentPage(page);

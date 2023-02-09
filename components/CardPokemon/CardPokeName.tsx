@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CardPokemonContext } from "./index";
+import { CardPokemonContext } from "providers/pokemon.context";
 
 export const CardPokeName = () => {
   const { pokemon } = useContext(CardPokemonContext);

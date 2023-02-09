@@ -5,7 +5,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./variables"; 
 @import "./card-pokemon"; 
+@import "./pokemon-detail"; 
 @import "./loading"; 
 @import "./modal"; 
 
@@ -27,5 +29,11 @@ a {
 
 .background {
   background-image: url('/background.png');
+}
+
+@each $type, $color in $pokemon-types-colors {
+  .bg-#{$type}-500 {
+    background-color: #{$color};
+  }
 }
 

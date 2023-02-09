@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import PokeballType from "icons/pokeball-type.svg";
-import { CardPokemonContext } from "./index";
+import { CardPokemonContext } from "providers/pokemon.context";
 
 export const CardPokeTypes = () => {
   const { pokemon } = useContext(CardPokemonContext);
